@@ -40,7 +40,7 @@ bool completa(Node* ptrHead)
   return 0;
 }
 
-bool prefeita(Node* ptrHead)
+bool perfeita(Node* ptrHead)
 {
   return 0;
 }
@@ -50,7 +50,7 @@ void exebe_BFS(Node* ptrHead)
   
 }
 
-Node* ordenar_Bubble()
+Node* ordenar_Bubble(Node* ptrHead)
 {
   return nullptr;
 }
