@@ -22,11 +22,29 @@ int tamanho(Node* ptrHead)
 
 Node* inserir(Node* ptrHead)
 {
+    int inputValue;
+
+    std::cout << "Ensira um valor inteiro para entrar na árvore: ";
+    std::cin >> inputValue;
+
+    ptrHead = insertNode(ptrHead, inputValue);
+
+    std::cout << inputValue << " inserido com sucesso na árvore!" << std::endl;
+
   return nullptr;
 }
 
 Node* remover(Node* ptrHead)
 {
+    int inputValue;
+
+    std::cout << "Qual valor você gostaria de deletar da árvore: ";
+    std::cin >> inputValue;
+
+    ptrHead = deleteNode(ptrHead, inputValue);
+
+    std::cout << inputValue << " Valor deletado com sucesso da árvore!" << std::endl;
+
   return nullptr;
 }
 
@@ -47,7 +65,7 @@ bool perfeita(Node* ptrHead)
 
 void exebe_BFS(Node* ptrHead)
 {
-  
+
 }
 
 Node* ordenar_Bubble(Node* ptrHead)
