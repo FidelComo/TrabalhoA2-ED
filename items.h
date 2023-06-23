@@ -30,6 +30,7 @@ Node* inserir(Node* ptrHead)
     ptrHead = insertNode(ptrHead, inputValue);
 
     std::cout << inputValue << " inserido com sucesso na árvore!" << std::endl;
+    return ptrHead;
 
   return nullptr;
 }
@@ -44,6 +45,7 @@ Node* remover(Node* ptrHead)
     ptrHead = deleteNode(ptrHead, inputValue);
 
     std::cout << inputValue << " Valor deletado com sucesso da árvore!" << std::endl;
+    return ptrHead;
 
   return nullptr;
 }
