@@ -44,6 +44,8 @@ int main()
 {
   Node* ptrHead = nullptr;
   int iOption = 0;
+  bool bValida = 1;
+  double dbTempo = 0;
   
   while (true)
     {
@@ -56,41 +58,49 @@ int main()
         case 0:
           return 0;
         case 1:
-          ptrHead = constroi_txt();
+          ptrHead = constroi_txt(dbTempo);
           break;
         case 2:
-          ptrHead = constroi_input();
+          ptrHead = constroi_input(dbTempo);
           break;
         case 3:
-          cout << altura(ptrHead) << endl;
+          altura(ptrHead, dbTempo);
           break;
         case 4:
-          cout << tamanho(ptrHead) << endl;
+          tamanho(ptrHead, dbTempo);
           break;
         case 5:
-          ptrHead = inserir(ptrHead);
+          ptrHead = inserir(ptrHead, dbTempo);
           break;
         case 6:
-          ptrHead = remover(ptrHead);
+          ptrHead = remover(ptrHead, dbTempo);
           break;
         case 7:
-          cout << buscar(ptrHead) << endl;
+          buscar(ptrHead, dbTempo);
           break;
         case 8:
-           cout << "A arvore " << ((completa(ptrHead)) ? "":"não ") << "é completa" << endl;
+           completa(ptrHead, dbTempo);
           break;
         case 9:
-          cout << ((perfeita(ptrHead)) ? "A arvore é perfeita" : "A arvore não é perfeita") << endl;
+          perfeita(ptrHead, dbTempo);
           break;
         case 10:
-          exebe_BFS(ptrHead);
+          exebe_BFS(ptrHead, dbTempo);
           break;
         case 11:
-          ptrHead = ordenar_Bubble(ptrHead);
+          ptrHead = ordenar_Bubble(ptrHead, dbTempo);
           break;
+        default:
+          bValida = 0;
       }
-      aguardarInput();
-      limparConsola();
+      if (bValida)
+      {
+        dbTempo *= 1e-09;
+        cout << "Tempo de execução: " << dbTempo << "s" << endl;
+        aguardarInput();
+        limparConsola();
+      }
+      bValida = 1;
     }
   
   return 0;

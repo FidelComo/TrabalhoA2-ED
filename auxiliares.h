@@ -50,12 +50,12 @@ void swapNodes(Node* &node1, Node* &node2)
 {
     Node* temp = node1->ptrRight;
     node1->ptrRight = node2->ptrRight;
-    if (temp != node2) node2->ptrRight = temp;
+    if (temp != node2 or temp == nullptr) node2->ptrRight = temp;
     else node2->ptrRight = node1;
     
     temp = node1->ptrLeft;
     node1->ptrLeft = node2->ptrLeft;
-    if (temp != node2) node2->ptrLeft = temp;
+    if (temp != node2 or temp == nullptr) node2->ptrLeft = temp;
     else node2->ptrLeft = node1;
     
     temp = node1;
@@ -63,8 +63,8 @@ void swapNodes(Node* &node1, Node* &node2)
     node2 = temp;
     
     temp = node1->ptrRight;
-    while (temp->ptrLeft != node1) temp = temp->ptrLeft;
-    temp->ptrLeft = node2;
+    while (temp->ptrLeft != node1 and temp->ptrLeft != nullptr) temp = temp->ptrLeft;
+    if (temp->ptrLeft != nullptr) temp->ptrLeft = node2;
     
     return;
 }
