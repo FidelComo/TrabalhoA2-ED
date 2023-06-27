@@ -79,7 +79,7 @@ int main()
           buscar(ptrHead, dbTempo);
           break;
         case 8:
-           completa(ptrHead, dbTempo);
+          completa(ptrHead, dbTempo);
           break;
         case 9:
           perfeita(ptrHead, dbTempo);

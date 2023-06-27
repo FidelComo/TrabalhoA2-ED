@@ -21,14 +21,16 @@ Node* constroi_input(double &dbTempo)
   return nullptr;
 }
 
-int altura(Node* ptrHead, double &dbTempo)
+void altura(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  //Inserir operação
+  
+  int iAltura = height(ptrHead);
+  
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
-  return 0;
+
+  cout << "Altura da sua árvore: " << iAltura << endl;
 }
 
 int tamanho(Node* ptrHead, double &dbTempo)

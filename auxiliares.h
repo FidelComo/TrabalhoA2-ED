@@ -113,3 +113,13 @@ struct Node* searchNode(struct Node* node, int iData)
     else if (iData < node->iPayload) return searchNode(node->ptrLeft, iData);
     return searchNode(node->ptrRight, iData);
 }
+
+int height(struct Node* ptrStartingNode)
+{
+  if (ptrStartingNode == nullptr) return 0;
+
+  int iLeft = height(ptrStartingNode->ptrLeft);
+  int iRight = height(ptrStartingNode->ptrRight);
+
+  return max(iLeft, iRight) + 1;
+}
