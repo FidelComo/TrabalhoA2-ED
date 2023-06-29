@@ -18,7 +18,10 @@ void printMenu()
   cout << " " << i++ << ". Verificar se a árvore é completa" << endl;
   cout << " " << i++ << ". Verificar se a árvore é perfeita" << endl;
   cout << i++ << ". Exibir a árvore" << endl;
-  cout << i++ << ". Ordenar com Bubble Sort" << endl;
+  cout << i++ << ". Converter e ordenar com Bubble Sort" << endl;
+  cout << i++ << ". Converter e ordenar com Selection Sort" << endl;
+  cout << i++ << ". Converter e ordenar com Insertion Sort" << endl;
+  cout << i++ << ". Converter e ordenar com Merge Sort" << endl;
   cout << " 0. Sair" << endl;
 }
 
@@ -43,6 +46,7 @@ void aguardarInput()
 int main()
 {
   Node* ptrHead = nullptr;
+  Node* ptrHead_list = nullptr;
   int iOption = 0;
   bool bValida = 1;
   double dbTempo = 0;
@@ -88,7 +92,21 @@ int main()
           exebe_BFS(ptrHead, dbTempo);
           break;
         case 11:
-          ptrHead = ordenar_Bubble(ptrHead, dbTempo);
+          converte(ptrHead, &ptrHead_list);
+          BubbleSort(&ptrHead_list, dbTempo);
+          break;
+        case 12:
+          converte(ptrHead, &ptrHead_list);
+          SelectionSort(&ptrHead_list, dbTempo);
+          break;
+        case 13:
+          converte(ptrHead, &ptrHead_list);
+          InsertionSort(&ptrHead_list, dbTempo);
+          break;
+        case 14:
+          converte(ptrHead, &ptrHead_list);
+          MergeSort(&ptrHead_list);
+          printList(ptrHead_list);
           break;
         default:
           bValida = 0;

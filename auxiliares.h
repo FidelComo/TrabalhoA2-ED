@@ -229,3 +229,63 @@ void traverseBFS(Node* root)
     }
   }
 }
+
+void printList(Node* ptrHead) 
+{
+    Node* ptrCurrent = ptrHead;
+    while (ptrCurrent != nullptr) 
+    {
+        cout << ptrCurrent->iPayload << " ";
+        ptrCurrent = ptrCurrent->ptrRight;
+    } cout << endl;
+}
+
+Node* mergeSortedList(Node* ptrHead1, Node* ptrHead2) 
+{
+    if (ptrHead1 == nullptr) return ptrHead2;
+    if (ptrHead2 == nullptr) return ptrHead1;
+
+    Node* ptrMerged_list = nullptr;
+    
+    if (ptrHead1->iPayload <= ptrHead2->iPayload) 
+    {
+        ptrMerged_list = ptrHead1;
+        ptrMerged_list->ptrRight = mergeSortedList(ptrHead1->ptrRight, ptrHead2);
+    } 
+    else 
+    {
+        ptrMerged_list = ptrHead2;
+        ptrMerged_list->ptrRight = mergeSortedList(ptrHead1, ptrHead2->ptrRight);
+    }
+    if (ptrMerged_list->ptrRight != nullptr) ptrMerged_list->ptrRight->ptrLeft = ptrMerged_list;
+    
+    return ptrMerged_list;
+}
+
+void splitList(Node* ptrSource, Node** ptrFront, Node** ptrBack) 
+{
+    if (ptrSource == nullptr || ptrSource->ptrRight == nullptr) 
+    {
+        *ptrFront = ptrSource;
+        *ptrBack = nullptr;
+        return;
+    }
+
+    Node* ptrSlow = ptrSource;
+    Node* ptrFast = ptrSource->ptrRight;
+
+    while (ptrFast != nullptr) 
+    {
+        ptrFast = ptrFast->ptrRight;
+        if (ptrFast != nullptr) 
+        {
+            ptrSlow = ptrSlow->ptrRight;
+            ptrFast = ptrFast->ptrRight;
+        }
+    }
+
+    *ptrFront = ptrSource;
+    *ptrBack = ptrSlow->ptrRight;
+    ptrSlow->ptrRight = nullptr;
+    if (*ptrBack != nullptr) (*ptrBack)->ptrLeft = nullptr;
+}
