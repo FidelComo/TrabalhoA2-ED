@@ -7,7 +7,7 @@ Node* constroi_txt(double &dbTempo)
   //Inserir operação
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
+
   return nullptr;
 }
 
@@ -17,30 +17,32 @@ Node* constroi_input(double &dbTempo)
   //Inserir operação
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
+
   return nullptr;
 }
 
 void altura(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  
+
   int iAltura = height(ptrHead);
-  
+
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
   cout << "Altura da sua árvore: " << iAltura << endl;
 }
 
-int tamanho(Node* ptrHead, double &dbTempo)
+void tamanho(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  //Inserir operação
+  
+  int iSize = calculateTreeSize(ptrHead);
+  
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
-  return 0;
+
+  std::cout << "O tamanho da árvore é: " << iSize << std::endl;
 }
 
 Node* inserir(Node* ptrHead, double &dbTempo)
@@ -51,7 +53,9 @@ Node* inserir(Node* ptrHead, double &dbTempo)
   std::cin >> inputValue;
 
   auto start = chrono::high_resolution_clock::now();
+  
   ptrHead = insertNode(ptrHead, inputValue);
+  
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
@@ -67,7 +71,9 @@ Node* remover(Node* ptrHead, double &dbTempo)
   std::cin >> inputValue;
 
   auto start = chrono::high_resolution_clock::now();
+  
   ptrHead = deleteNode(ptrHead, inputValue);
+  
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
@@ -81,7 +87,7 @@ Node* buscar(Node* ptrHead, double &dbTempo)
   //Inserir operação
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
+
   return nullptr;
 }
 
@@ -91,7 +97,7 @@ bool completa(Node* ptrHead, double &dbTempo)
   //Inserir operação
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
+
   return 0;
 }
 
@@ -101,14 +107,18 @@ bool perfeita(Node* ptrHead, double &dbTempo)
   //Inserir operação
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
+
   return 0;
 }
 
 void exebe_BFS(Node* ptrHead, double &dbTempo)
 {
+  cout << "A sua árvore: " << endl;
+  
   auto start = chrono::high_resolution_clock::now();
-  //Inserir operação
+  
+  traverseBFS(ptrHead);
+  
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 }
@@ -119,7 +129,7 @@ Node* ordenar_Bubble(Node* ptrHead, double &dbTempo)
   //Inserir operação
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
+
   return nullptr;
 }
 
