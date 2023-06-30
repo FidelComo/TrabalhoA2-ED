@@ -247,25 +247,30 @@ void traverseBFS(Node* ptrRoot)
   }
 }
 
-void convertTree(Node* ptrRoot, Node** ptrHead)
+struct Node* greaterLeaf(struct Node* node)
 {
-  if (ptrRoot == nullptr) return;
-  // Nó visitado anteriormente
-  static Node* ptrPrev = nullptr;
- 
-  //Converte a sub árvore a esquerda
-  convertTree(ptrRoot->ptrLeft, ptrHead);
- 
-  if (ptrPrev == nullptr) *ptrHead = ptrRoot;
-  else
-  {
-    ptrRoot->ptrLeft = ptrPrev;
-    ptrPrev->ptrRight = ptrRoot;
-  }
-  ptrPrev = ptrRoot;
- 
-  //Converte a sub árvore a direita
-  convertTree(ptrRoot->ptrRight, ptrHead);
+    struct Node* ptrCurrent = node;
+
+    while(ptrCurrent && ptrCurrent->ptrRight != nullptr) ptrCurrent = ptrCurrent->ptrRight;
+
+    return ptrCurrent;
+}
+
+void convertTree(Node* ptrRoot)
+{
+    Node* ptrCurrent = ptrRoot;
+    Node* ptrPrev = nullptr;
+    Node* ptrEnd = greaterLeaf(ptrRoot);
+    
+    while (ptrCurrent != nullptr)
+    {
+        ptrEnd->ptrRight = ptrCurrent->ptrLeft;
+        ptrCurrent->ptrLeft = ptrPrev;
+        ptrEnd = greaterLeaf(ptrEnd);
+
+        ptrPrev = ptrCurrent;
+        ptrCurrent = ptrCurrent->ptrRight;
+    }
 }
 
 bool isLevelFull(Node* ptrStartingNode, int iLevel)
@@ -328,6 +333,27 @@ void printList(Node* ptrHead)
         cout << ptrCurrent->iPayload << " ";
         ptrCurrent = ptrCurrent->ptrRight;
     } cout << endl;
+}
+
+Node* swapListNodes(Node* ptrNode1, Node* ptrNode2)
+{
+    if (ptrNode1 == ptrNode2) return ptrNode1;
+    
+    Node* ptrPrev1 = ptrNode1->ptrLeft;
+    Node* ptrPrev2 = ptrNode2->ptrLeft;
+    
+    Node* next2 = ptrNode2->ptrRight;
+
+    ptrPrev2->ptrRight = ptrNode2;
+    if (next2 != nullptr) next2->ptrLeft = ptrPrev2;
+    
+    ptrNode1->ptrLeft = ptrNode2;
+    ptrNode2->ptrRight = ptrNode1;
+    
+    if (ptrPrev1 != nullptr) ptrPrev1->ptrRight = ptrNode2;
+    ptrNode2->ptrLeft = ptrPrev1;
+    
+    return ptrNode2;
 }
 
 Node* mergeSortedList(Node* ptrHead1, Node* ptrHead2) 
@@ -406,13 +432,14 @@ Node* extractNode(Node* ptrHead, Node* ptrNode)
         
         return ptrTemp;
     }
-    
+  
     if (ptrNode->ptrRight != nullptr) ptrNode->ptrRight->ptrLeft = ptrNode->ptrLeft;
+  
     ptrNode->ptrLeft->ptrRight = ptrNode->ptrRight;
-    
+  
     ptrNode->ptrRight = nullptr;
     ptrNode->ptrLeft = nullptr;
-    
+
     return ptrHead;
 }
 
@@ -427,7 +454,7 @@ Node* extractList(Node* &ptrHead, int iGap, int iFase)
     {
         ptrPrev = ptrCurr;
         ptrCurr = next(ptrCurr, iGap);
-        
+
         ptrHead = extractNode(ptrHead, ptrPrev);
         ptrHead2 = insertNode(ptrHead2, ptrPrev);
     }
@@ -498,15 +525,15 @@ void convertList(Node* ptrHead)
 /*===================================================================*/
 //Sorts
 
-void BubbleSort(Node** ptrHead) 
+Node* BubbleSort(Node* ptrHead) 
 {
-  if (*ptrHead == nullptr || (*ptrHead)->ptrRight == nullptr) return;
+  if (ptrHead == nullptr || ptrHead->ptrRight == nullptr) return ptrHead;
 
   Node* ptrLast = nullptr;
     
-  while (ptrLast != (*ptrHead)->ptrRight) 
+  while (ptrLast != ptrHead->ptrRight) 
   {
-    Node* ptrCurrent = *ptrHead;
+    Node* ptrCurrent = ptrHead;
         
     while (ptrCurrent->ptrRight != ptrLast) 
     {
@@ -515,14 +542,16 @@ void BubbleSort(Node** ptrHead)
     } 
     ptrLast = ptrCurrent;
   }
+
+  return ptrHead;
 }
 
-void InsertionSort(Node** ptrHead) 
+Node* InsertionSort(Node* ptrHead) 
 {
-  if (*ptrHead == nullptr || (*ptrHead)->ptrRight == nullptr) return;
+  if (ptrHead == nullptr || ptrHead->ptrRight == nullptr) return ptrHead;
 
   Node* ptrList_sorted = nullptr;
-  Node* ptrCurrent = *ptrHead;
+  Node* ptrCurrent = ptrHead;
     
   while (ptrCurrent != nullptr) 
   {
@@ -550,50 +579,56 @@ void InsertionSort(Node** ptrHead)
     }
     ptrCurrent = ptrNext_node;
   }
-  *ptrHead = ptrList_sorted;
+  ptrHead = ptrList_sorted;
+
+  return ptrHead;
 }
 
-void SelectionSort(Node** ptrHead) 
+Node* SelectionSort(Node* ptrHead) 
 {
-  if (*ptrHead == nullptr || (*ptrHead)->ptrRight == nullptr) return;
+  if (ptrHead == nullptr || (ptrHead)->ptrRight == nullptr) return ptrHead;
 
-  Node* ptrCurrent = *ptrHead;
+  Node* ptrCurrent = ptrHead;
   while (ptrCurrent != nullptr) 
   {
     Node* ptrMin_node = ptrCurrent;
     Node* ptrSearch = ptrCurrent->ptrRight;
-        
+
     while (ptrSearch != nullptr) 
     {
       if (ptrSearch->iPayload < ptrMin_node->iPayload) ptrMin_node = ptrSearch;
       ptrSearch = ptrSearch->ptrRight;
     }
-    swapNodes(ptrCurrent, ptrMin_node);
+    ptrCurrent = swapListNodes(ptrCurrent, ptrMin_node);
     ptrCurrent = ptrCurrent->ptrRight;
   }
+
+  return ptrHead;
 }
 
-void MergeSort(Node** ptrHead) 
+Node* MergeSort(Node* ptrHead) 
 {
-    if (*ptrHead == nullptr || (*ptrHead)->ptrRight == nullptr) return;
+    if (ptrHead == nullptr || (ptrHead)->ptrRight == nullptr) return ptrHead;
     
     Node* ptrFront = nullptr;
     Node* ptrBack = nullptr;
     // Divide a lista em duas partes
-    splitList(*ptrHead, &ptrFront, &ptrBack);
+    splitList(ptrHead, &ptrFront, &ptrBack);
     
     // Ordena as duas partes da lista recursivamente
-    MergeSort(&ptrFront);
-    MergeSort(&ptrBack);
+    MergeSort(ptrFront);
+    MergeSort(ptrBack);
     
     // Mescla as duas partes ordenadas
-    *ptrHead = mergeSortedList(ptrFront, ptrBack);
-    if (*ptrHead != nullptr) (*ptrHead)->ptrLeft = nullptr;
+    ptrHead = mergeSortedList(ptrFront, ptrBack);
+    if (ptrHead != nullptr) (ptrHead)->ptrLeft = nullptr;
+
+    return ptrHead;
 }
 
 Node* shellSort(Node* ptrHead, int iSize)
 {
-    if (ptrHead == nullptr) return nullptr;
+    if (ptrHead == nullptr || (ptrHead)->ptrRight == nullptr) return ptrHead;
   
     Node* ptrTemp = nullptr;
     
@@ -603,14 +638,14 @@ Node* shellSort(Node* ptrHead, int iSize)
         for (int iFase = 0; iFase < iGap; iFase++)
         {
             ptrTemp = extractList(ptrHead, iGap, iFase);
-            InsertionSort(&ptrTemp);
+            ptrTemp = InsertionSort(ptrTemp);
             ptrHead = mergeLists(ptrHead, ptrTemp, iGap, iFase);
         }
         
         iGap /= 2;
     }
     
-    InsertionSort(&ptrHead);
+    ptrHead = InsertionSort(ptrHead);
     
     return ptrHead;
 }

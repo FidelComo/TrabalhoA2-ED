@@ -156,90 +156,86 @@ void exibe_BFS(Node* ptrHead, double &dbTempo)
 
 Node* sort_Bubble(Node* ptrHead, double dbTempo)
 {
-  Node** ptrHead2 = &ptrHead;
   auto start = chrono::high_resolution_clock::now();
 
-  convertTree(ptrHead, ptrHead2);
-  BubbleSort(ptrHead2);
+  convertTree(ptrHead);
+  ptrHead = BubbleSort(ptrHead);
   convertList(ptrHead);
 
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
   cout << "Árvore ordenada: " << endl;
-  printList(*ptrHead2);
+  printList(ptrHead);
 
-  return *ptrHead2;
+  return ptrHead;
 }
 
 Node* sort_Insertion(Node* ptrHead, double dbTempo)
-{ 
-  Node** ptrHead2 = &ptrHead;  
+{  
   auto start = chrono::high_resolution_clock::now();
 
-  convertTree(ptrHead, ptrHead2);
-  InsertionSort(ptrHead2);
+  convertTree(ptrHead);
+  ptrHead = InsertionSort(ptrHead);
   convertList(ptrHead);
 
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
   cout << "Árvore ordenada: " << endl;
-  printList(*ptrHead2);
+  printList(ptrHead);
 
-  return *ptrHead2;
+  return ptrHead;
 }
 
 Node* sort_Selection(Node* ptrHead, double dbTempo)
 {
-  Node** ptrHead2 = &ptrHead;
   auto start = chrono::high_resolution_clock::now();
 
-  convertTree(ptrHead, ptrHead2);
-  SelectionSort(ptrHead2);
+  convertTree(ptrHead);
+  ptrHead = SelectionSort(ptrHead);
   convertList(ptrHead);
 
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
   cout << "Árvore ordenada: " << endl;
-  printList(*ptrHead2);
+  printList(ptrHead);
 
-  return *ptrHead2;
+  return ptrHead;
 }
 
 Node* sort_Merge(Node* ptrHead, double dbTempo)
 {
-  Node** ptrHead2 = &ptrHead;
   auto start = chrono::high_resolution_clock::now();
 
-  convertTree(ptrHead, ptrHead2);
-  MergeSort(ptrHead2);
+  convertTree(ptrHead);
+  ptrHead = MergeSort(ptrHead);
   convertList(ptrHead);
 
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
   cout << "Árvore ordenada: " << endl;
-  printList(*ptrHead2);
+  printList(ptrHead);
 
-  return *ptrHead2;
+  return ptrHead;
 }
 
 Node* sort_Shell(Node* ptrHead, double dbTempo)
 {
-  Node** ptrHead2 = &ptrHead;  
   auto start = chrono::high_resolution_clock::now();
 
   int iTamanho = calculateTreeSize(ptrHead);
-  convertTree(ptrHead, ptrHead2);
-  *ptrHead2 = shellSort(*ptrHead2, iTamanho);
+  convertTree(ptrHead);
+  ptrHead = shellSort(ptrHead, iTamanho);
+  convertList(ptrHead);
 
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
   cout << "Árvore ordenada: " << endl;
-  printList(*ptrHead2);
+  printList(ptrHead);
 
-  return *ptrHead2;
+  return ptrHead;
 }

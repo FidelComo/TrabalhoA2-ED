@@ -19,8 +19,8 @@ void printMenu()
   cout << " " << i++ << ". Verificar se a árvore é perfeita" << endl;
   cout << i++ << ". Exibir a árvore" << endl;
   cout << i++ << ". Converter e ordenar com Bubble Sort" << endl;
-  cout << i++ << ". Converter e ordenar com Selection Sort" << endl;
   cout << i++ << ". Converter e ordenar com Insertion Sort" << endl;
+  cout << i++ << ". Converter e ordenar com Selection Sort" << endl;
   cout << i++ << ". Converter e ordenar com Merge Sort" << endl;
   cout << i++ << ". Converter e ordenar com Shell Sort" << endl;
   cout << " 0. Sair" << endl;
@@ -95,10 +95,10 @@ int main()
           ptrHead = sort_Bubble(ptrHead, dbTempo);
           break;
         case 12:
-          ptrHead = sort_Selection(ptrHead, dbTempo);
+          ptrHead = sort_Insertion(ptrHead, dbTempo);
           break;
         case 13:
-          ptrHead = sort_Insertion(ptrHead, dbTempo);
+          ptrHead = sort_Selection(ptrHead, dbTempo);
           break;
         case 14:
           ptrHead = sort_Merge(ptrHead, dbTempo);
