@@ -92,21 +92,16 @@ int main()
           exebe_BFS(ptrHead, dbTempo);
           break;
         case 11:
-          converte(ptrHead, &ptrHead_list);
-          BubbleSort(&ptrHead_list, dbTempo);
+          ptrHead = sort_Bubble(ptrHead, dbTempo);
           break;
         case 12:
-          converte(ptrHead, &ptrHead_list);
-          SelectionSort(&ptrHead_list, dbTempo);
+          ptrHead = sort_Insertion(ptrHead, dbTempo);
           break;
         case 13:
-          converte(ptrHead, &ptrHead_list);
-          InsertionSort(&ptrHead_list, dbTempo);
+          ptrHead = sort_Selection(ptrHead, dbTempo);
           break;
         case 14:
-          converte(ptrHead, &ptrHead_list);
-          MergeSort(&ptrHead_list);
-          printList(ptrHead_list);
+          ptrHead = sort_Merge(ptrHead, dbTempo);
           break;
         default:
           bValida = 0;
