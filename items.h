@@ -1,14 +1,36 @@
 #include <chrono>
+#include <fstream>
 #include "auxiliares.h"
 
-Node* constroi_txt(double &dbTempo)
+Node* constroi_txt(Node* ptrRoot, double &dbTempo)
 {
+  ifstream file;
+  string strFileName = "";
+  int iElement = 0;
+  
+  cout << "Digite o nome do arquivo: (0 Para sair)" << endl;
+
+  // Pedir para o usuario o nome do arquivo até ele fornecer um nome valido
+  while (!file.is_open())
+  {
+    cin >> strFileName;
+    if (strFileName == "0") return ptrRoot;
+    file.open(strFileName);
+  }
+
+  // Se ja existe uma árvore, ela será deletada
+  if (ptrRoot != nullptr) ptrRoot = deleteTree(ptrRoot);
+    
   auto start = chrono::high_resolution_clock::now();
-  //Inserir operação
+  
+  while (file >> iElement) ptrRoot = insertNode(ptrRoot, iElement);
+  
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-
-  return nullptr;
+  
+  file.close();
+  
+  return ptrRoot;
 }
 
 Node* constroi_input(double &dbTempo)

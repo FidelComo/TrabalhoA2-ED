@@ -62,7 +62,7 @@ int main()
         case 0:
           return 0;
         case 1:
-          ptrHead = constroi_txt(dbTempo);
+          ptrHead = constroi_txt(ptrHead, dbTempo);
           break;
         case 2:
           ptrHead = constroi_input(dbTempo);
@@ -115,6 +115,8 @@ int main()
       }
       bValida = 1;
     }
+
+  ptrHead = deleteTree(ptrHead);
   
   return 0;
 }

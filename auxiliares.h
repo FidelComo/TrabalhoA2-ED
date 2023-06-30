@@ -93,6 +93,18 @@ void traverseInOrder(struct Node* ptrStartingNode)
     traverseInOrder(ptrStartingNode->ptrRight);
 }
 
+struct Node* deleteTree(struct Node* ptrStartingNode)
+{
+    if (ptrStartingNode == nullptr) return nullptr;
+    
+    ptrStartingNode->ptrLeft = deleteTree(ptrStartingNode->ptrLeft);
+    ptrStartingNode->ptrLeft = deleteTree(ptrStartingNode->ptrLeft);
+    
+    free(ptrStartingNode);
+    
+    return nullptr;
+}
+
 struct Node* lesserLeaf(struct Node* ptrNode)
 {
     struct Node* ptrCurrent = ptrNode;
