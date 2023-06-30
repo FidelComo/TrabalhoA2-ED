@@ -22,65 +22,66 @@ struct Queue
 };
 
 /*===================================================================*/
-//Funçoes para Queues
+//Funções para Queues
 
 struct qNode* newQNode(Node* ptrData)
 {
-    struct qNode* newNodePtr = (struct qNode*) malloc(sizeof(struct qNode));
-    newNodePtr->ptrPayload = ptrData;
-    newNodePtr->ptrNext = nullptr;
-    newNodePtr->ptrPrev = nullptr;
+    struct qNode* ptrNewNode = (struct qNode*) malloc(sizeof(struct qNode));
+    ptrNewNode->ptrPayload = ptrData;
+    ptrNewNode->ptrNext = nullptr;
+    ptrNewNode->ptrPrev = nullptr;
 
-    return newNodePtr;
+    return ptrNewNode;
 }
 
 void Push(struct Queue &queue, struct Node* ptrData)
 {
-    qNode* newNode = newQNode(ptrData);
+    qNode* ptrNewNode = newQNode(ptrData);
   
     if (queue.ptrFirst != nullptr) 
     {
-        queue.ptrFirst->ptrPrev = newNode;
-        newNode->ptrNext = queue.ptrFirst;
-    } else queue.ptrLast = newNode;
+        queue.ptrFirst->ptrPrev = ptrNewNode;
+        ptrNewNode->ptrNext = queue.ptrFirst;
+    } 
+    else queue.ptrLast = ptrNewNode;
   
-    queue.ptrFirst = newNode;
+    queue.ptrFirst = ptrNewNode;
 }
 
 void Pop(struct Queue &queue)
 {
     if (queue.ptrFirst == nullptr) return;
   
-    qNode* oldNode = queue.ptrLast;
+    qNode* ptrOldNode = queue.ptrLast;
     
     queue.ptrLast = queue.ptrLast->ptrPrev;
     if (queue.ptrLast != nullptr) queue.ptrLast->ptrNext = nullptr;
     else queue.ptrFirst = nullptr;
 
-    free(oldNode);
+    free(ptrOldNode);
 }
 
 /*===================================================================*/
-//Funçoes para Trees
+//Funções para Trees
 
 struct Node* newNode(int iData)
 {
-    struct Node* newNodePtr = (struct Node*) malloc(sizeof(struct Node));
-    newNodePtr->iPayload = iData;
-    newNodePtr->ptrLeft = nullptr;
-    newNodePtr->ptrRight = nullptr;
+    struct Node* ptrNewNode = (struct Node*) malloc(sizeof(struct Node));
+    ptrNewNode->iPayload = iData;
+    ptrNewNode->ptrLeft = nullptr;
+    ptrNewNode->ptrRight = nullptr;
 
-    return newNodePtr;
+    return ptrNewNode;
 }
 
-struct Node* insertNode(struct Node* root, int iData)
+struct Node* insertNode(struct Node* ptrRoot, int iData)
 {
-    if (root == nullptr) return newNode(iData);
+    if (ptrRoot == nullptr) return newNode(iData);
 
-    if (iData < root->iPayload) root->ptrLeft = insertNode(root->ptrLeft, iData);
-    else root->ptrRight = insertNode(root->ptrRight, iData);
+    if (iData < ptrRoot->iPayload) ptrRoot->ptrLeft = insertNode(ptrRoot->ptrLeft, iData);
+    else ptrRoot->ptrRight = insertNode(ptrRoot->ptrRight, iData);
 
-    return root;
+    return ptrRoot;
 }
 
 void traverseInOrder(struct Node* ptrStartingNode)
@@ -92,81 +93,80 @@ void traverseInOrder(struct Node* ptrStartingNode)
     traverseInOrder(ptrStartingNode->ptrRight);
 }
 
-struct Node* lesserLeaf(struct Node* node)
+struct Node* lesserLeaf(struct Node* ptrNode)
 {
-    struct Node* ptrCurrent = node;
+    struct Node* ptrCurrent = ptrNode;
 
     while(ptrCurrent && ptrCurrent->ptrLeft != nullptr) ptrCurrent = ptrCurrent->ptrLeft;
 
     return ptrCurrent;
 }
 
-void swapNodes(Node* &node1, Node* &node2)
+void swapNodes(Node* &ptrNode1, Node* &ptrNode2)
 {
-    Node* temp = node1->ptrRight;
-    node1->ptrRight = node2->ptrRight;
-    if (temp != node2 or temp == nullptr) node2->ptrRight = temp;
-    else node2->ptrRight = node1;
+    Node* ptrTemp = ptrNode1->ptrRight;
+    ptrNode1->ptrRight = ptrNode2->ptrRight;
+    if (ptrTemp != ptrNode2 or ptrTemp == nullptr) ptrNode2->ptrRight = ptrTemp;
+    else ptrNode2->ptrRight = ptrNode1;
 
-    temp = node1->ptrLeft;
-    node1->ptrLeft = node2->ptrLeft;
-    if (temp != node2 or temp == nullptr) node2->ptrLeft = temp;
-    else node2->ptrLeft = node1;
+    ptrTemp = ptrNode1->ptrLeft;
+    ptrNode1->ptrLeft = ptrNode2->ptrLeft;
+    if (ptrTemp != ptrNode2 or ptrTemp == nullptr) ptrNode2->ptrLeft = ptrTemp;
+    else ptrNode2->ptrLeft = ptrNode1;
 
-    temp = node1;
-    node1 = node2;
-    node2 = temp;
+    ptrTemp = ptrNode1;
+    ptrNode1 = ptrNode2;
+    ptrNode2 = ptrTemp;
 
-    temp = node1->ptrRight;
-    while (temp->ptrLeft != node1 and temp->ptrLeft != nullptr) temp = temp->ptrLeft;
-    if (temp->ptrLeft != nullptr) temp->ptrLeft = node2;
+    ptrTemp = ptrNode1->ptrRight;
+    while (ptrTemp->ptrLeft != ptrNode1 and ptrTemp->ptrLeft != nullptr) ptrTemp = ptrTemp->ptrLeft;
+    if (ptrTemp->ptrLeft != nullptr) ptrTemp->ptrLeft = ptrNode2;
 
     return;
 }
 
-struct Node* deleteNode(struct Node* root, int iData)
+struct Node* deleteNode(struct Node* ptrRoot, int iData)
 {
-    if (root == nullptr) return root;
+    if (ptrRoot == nullptr) return ptrRoot;
 
-    if (iData < root->iPayload) root->ptrLeft = deleteNode(root->ptrLeft, iData);
-    else if (iData > root->iPayload) root->ptrRight = deleteNode(root->ptrRight, iData);
-
+    if (iData < ptrRoot->iPayload) ptrRoot->ptrLeft = deleteNode(ptrRoot->ptrLeft, iData);
+    else if (iData > ptrRoot->iPayload) ptrRoot->ptrRight = deleteNode(ptrRoot->ptrRight, iData);
     else
     {
-        struct Node* temp = nullptr;
+        struct Node* ptrTemp = nullptr;
 
-        if (root->ptrLeft == nullptr)
+        if (ptrRoot->ptrLeft == nullptr)
         {
-            temp = root->ptrRight;
-            free(root);
+            ptrTemp = ptrRoot->ptrRight;
+            free(ptrRoot);
 
-            return temp;
+            return ptrTemp;
         }
-        else if (root->ptrRight == nullptr)
+        else if (ptrRoot->ptrRight == nullptr)
         {
-            temp = root->ptrLeft;
-            free(root);
+            ptrTemp = ptrRoot->ptrLeft;
+            free(ptrRoot);
 
-            return temp;
+            return ptrTemp;
         }
 
-        temp = lesserLeaf(root->ptrRight);
+        ptrTemp = lesserLeaf(ptrRoot->ptrRight);
 
-        swapNodes(root, temp);
+        swapNodes(ptrRoot, ptrTemp);
 
-        root->ptrRight = deleteNode(root->ptrRight, temp->iPayload);
+        ptrRoot->ptrRight = deleteNode(ptrRoot->ptrRight, ptrTemp->iPayload);
     }
-    return root;
+    return ptrRoot;
 }
 
-struct Node* searchNode(struct Node* node, int iData)
+struct Node* searchNode(struct Node* ptrNode, int iData)
 {
-    if (node == nullptr) return nullptr;
+    if (ptrNode == nullptr) return nullptr;
 
-    else if (node->iPayload == iData) return node;
+    else if (ptrNode->iPayload == iData) return ptrNode;
 
-    else if (iData < node->iPayload) return searchNode(node->ptrLeft, iData);
-    return searchNode(node->ptrRight, iData);
+    else if (iData < ptrNode->iPayload) return searchNode(ptrNode->ptrLeft, iData);
+    return searchNode(ptrNode->ptrRight, iData);
 }
 
 int height(struct Node* ptrStartingNode)
@@ -179,48 +179,50 @@ int height(struct Node* ptrStartingNode)
   return max(iLeft, iRight) + 1;
 }
 
-// Fun�o para calcular o tamanho da �rvore
-int calculateTreeSize(Node* root) {
-    if (root == nullptr) {
-        return 0;
-    } else {
-        int ptrLeftSize = calculateTreeSize(root->ptrLeft);
-        int ptrRightSize = calculateTreeSize(root->ptrRight);
+// Função para calcular o tamanho da árvore
+int calculateTreeSize(Node* ptrRoot) 
+{
+    if (ptrRoot == nullptr) return 0;
+    else 
+    {
+        int ptrLeftSize = calculateTreeSize(ptrRoot->ptrLeft);
+        int ptrRightSize = calculateTreeSize(ptrRoot->ptrRight);
 
         return ptrLeftSize + ptrRightSize + 1;
     }
 }
 
-void traverseBFS(Node* root)
+void traverseBFS(Node* ptrRoot)
 {
-  if (root == nullptr) return;
+  if (ptrRoot == nullptr) return;
   
-  Node* lastNode = nullptr;
+  Node* ptrLastNode = nullptr;
   Queue queue = {
   nullptr,
   nullptr
   };
-  Push(queue, root);
+  Push(queue, ptrRoot);
 
   int iLevelNodes = 1;
   int iPrintedNodes = 0;
 
   while (queue.ptrFirst != nullptr)
   {
-    lastNode = queue.ptrLast->ptrPayload;
+    ptrLastNode = queue.ptrLast->ptrPayload;
 
-    // O ultimo no guardado na queue é exibido e os seus galhos sao guardados de ezquera a dereita na queue mantendo a ordem desejada
-    if (lastNode != nullptr) 
+    // O último nó guardado na queue é exibido e os seus galhos são guardados da esquerda para a direita na queue mantendo a ordem desejada
+    if (ptrLastNode != nullptr) 
     {
-      cout << lastNode->iPayload << " ";
-      Push(queue, lastNode->ptrLeft);
-      Push(queue, lastNode->ptrRight);
+      cout << ptrLastNode->iPayload << " ";
+      Push(queue, ptrLastNode->ptrLeft);
+      Push(queue, ptrLastNode->ptrRight);
       iPrintedNodes++;
-    } else iLevelNodes--;
+    } 
+    else iLevelNodes--;
     
     Pop(queue);
 
-    // Quando o numero de nos exibidos iguala o numero de nos no nivel, um novo nivel é atingido
+    // Quando o número de nós exibidos iguala o número de nós no nível, um novo nível é atingido
     if (iPrintedNodes == iLevelNodes)
     {
       cout << endl;

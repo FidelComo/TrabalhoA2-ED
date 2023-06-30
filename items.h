@@ -30,7 +30,7 @@ void altura(Node* ptrHead, double &dbTempo)
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
-  cout << "Altura da sua árvore: " << iAltura << endl;
+  cout << "A altura da sua árvore é: " << iAltura << endl;
 }
 
 void tamanho(Node* ptrHead, double &dbTempo)
@@ -42,42 +42,42 @@ void tamanho(Node* ptrHead, double &dbTempo)
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
-  std::cout << "O tamanho da árvore é: " << iSize << std::endl;
+  std::cout << "O tamanho da sua árvore é: " << iSize << std::endl;
 }
 
 Node* inserir(Node* ptrHead, double &dbTempo)
 {
-  int inputValue;
+  int iInputValue;
 
-  std::cout << "Ensira um valor inteiro para entrar na �rvore: ";
-  std::cin >> inputValue;
+  std::cout << "Insira um valor inteiro para entrar na árvore: ";
+  std::cin >> iInputValue;
 
   auto start = chrono::high_resolution_clock::now();
   
-  ptrHead = insertNode(ptrHead, inputValue);
+  ptrHead = insertNode(ptrHead, iInputValue);
   
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
-  std::cout << inputValue << " inserido com sucesso na �rvore!" << std::endl;
+  std::cout << iInputValue << " inserido com sucesso na árvore!" << std::endl;
   return ptrHead;
 }
 
 Node* remover(Node* ptrHead, double &dbTempo)
 {
-  int inputValue;
+  int iInputValue;
 
-  std::cout << "Qual valor voc� gostaria de deletar da �rvore: ";
-  std::cin >> inputValue;
+  std::cout << "Qual valor você gostaria de deletar da árvore? ";
+  std::cin >> iInputValue;
 
   auto start = chrono::high_resolution_clock::now();
   
-  ptrHead = deleteNode(ptrHead, inputValue);
+  ptrHead = deleteNode(ptrHead, iInputValue);
   
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
-  std::cout << inputValue << " Valor deletado com sucesso da �rvore!" << std::endl;
+  std::cout << iInputValue << " Valor deletado com sucesso da árvore!" << std::endl;
   return ptrHead;
 }
 
