@@ -301,8 +301,24 @@ Node* buildTreeImput(Node* ptrRoot)
     }
     return ptrRoot;
 }
+
 /*===================================================================*/
 //Funções para Lists
+
+//Insere um nó no final da lista
+Node* insertNode(Node* ptrHead, Node* ptrNode)
+{
+    if (ptrHead == nullptr) return ptrNode;
+    
+    Node* current = ptrHead;
+    
+    while (current->ptrRight != nullptr) current = current->ptrRight;
+    
+    current->ptrRight = ptrNode;
+    ptrNode->ptrLeft = current;
+    
+    return ptrHead;
+}
 
 void printList(Node* ptrHead) 
 {
@@ -364,6 +380,121 @@ void splitList(Node* ptrSource, Node** ptrFront, Node** ptrBack)
     if (*ptrBack != nullptr) (*ptrBack)->ptrLeft = nullptr;
 }
 
+//Avança de um determinado número de nós na lista
+Node* next(Node* ptrCurrent, int iGap)
+{
+    Node* ptrNext = ptrCurrent;
+    
+    for (int i = 0; i < iGap; i++) 
+    {
+        if (ptrNext == nullptr) break;
+        ptrNext = ptrNext->ptrRight;
+    }
+    
+    return ptrNext;
+}
+
+//Extrai um nó da lista sem deletar ele
+Node* extractNode(Node* ptrHead, Node* ptrNode)
+{
+    if (ptrNode == ptrHead)
+    {
+        Node* ptrTemp = ptrNode->ptrRight;
+        
+        ptrTemp->ptrLeft = nullptr;
+        ptrNode->ptrRight = nullptr;
+        
+        return ptrTemp;
+    }
+    
+    if (ptrNode->ptrRight != nullptr) ptrNode->ptrRight->ptrLeft = ptrNode->ptrLeft;
+    ptrNode->ptrLeft->ptrRight = ptrNode->ptrRight;
+    
+    ptrNode->ptrRight = nullptr;
+    ptrNode->ptrLeft = nullptr;
+    
+    return ptrHead;
+}
+
+//Extrai uma sublista da lista original
+Node* extractList(Node* &ptrHead, int iGap, int iFase)
+{
+    Node* ptrHead2 = nullptr;
+    Node* ptrCurr = next(ptrHead, iFase);
+    Node* ptrPrev = nullptr;
+    
+    while (ptrCurr != nullptr)
+    {
+        ptrPrev = ptrCurr;
+        ptrCurr = next(ptrCurr, iGap);
+        
+        ptrHead = extractNode(ptrHead, ptrPrev);
+        ptrHead2 = insertNode(ptrHead2, ptrPrev);
+    }
+    
+    if (ptrHead2->ptrRight != nullptr)
+    {
+        ptrHead = extractNode(ptrHead, ptrPrev);
+        ptrHead2 = insertNode(ptrHead2, ptrPrev);
+    }
+    
+    return ptrHead2;
+}
+
+//Insere um nó numa posição dada da lista
+Node* mergeNode(Node* ptrHead, Node* ptrCurr, Node* ptrNode)
+{
+    if (ptrCurr == nullptr)
+    {
+        ptrNode->ptrRight = ptrHead;
+        ptrNode->ptrLeft = nullptr;
+        
+        ptrHead->ptrLeft = ptrNode;
+        return ptrNode;
+    }
+
+    ptrNode->ptrRight = ptrCurr->ptrRight;
+    
+    ptrCurr->ptrRight = ptrNode;
+    if (ptrNode->ptrRight != nullptr) ptrNode->ptrRight->ptrLeft = ptrNode;
+    ptrNode->ptrLeft = ptrCurr;
+    
+    return ptrHead;
+}
+
+//Junta duas listas do mesmo jeito que foram separadas por extractList
+Node* mergeLists(Node* ptrHead1, Node* &ptrHead2, int iGap, int iFase)
+{
+    Node* ptrCurr1 = nullptr;
+    
+    if (iFase) ptrCurr1 = next(ptrHead1, iFase - 1);
+    
+    Node* ptrCurr2 = ptrHead2;
+    
+    while (ptrCurr2 != nullptr)
+    {
+        ptrHead2 = ptrHead2->ptrRight;
+        
+        ptrHead1 = mergeNode(ptrHead1, ptrCurr1, ptrCurr2);
+        
+        ptrCurr1 = next(ptrCurr2, iGap - 1);
+        
+        ptrCurr2 = ptrHead2;
+    }
+    
+    ptrHead2 = nullptr;
+    return ptrHead1;
+}
+
+void convertList(Node* ptrHead)
+{
+  while(ptrHead != nullptr)
+  {
+    ptrHead->ptrLeft = nullptr;
+    ptrHead = ptrHead->ptrRight;
+  }
+}
+
 /*===================================================================*/
 //Sorts
 
@@ -384,7 +515,6 @@ void BubbleSort(Node** ptrHead)
     } 
     ptrLast = ptrCurrent;
   }
-  printList(*ptrHead);
 }
 
 void InsertionSort(Node** ptrHead) 
@@ -421,7 +551,6 @@ void InsertionSort(Node** ptrHead)
     ptrCurrent = ptrNext_node;
   }
   *ptrHead = ptrList_sorted;
-  printList(*ptrHead);
 }
 
 void SelectionSort(Node** ptrHead) 
@@ -442,7 +571,6 @@ void SelectionSort(Node** ptrHead)
     swapNodes(ptrCurrent, ptrMin_node);
     ptrCurrent = ptrCurrent->ptrRight;
   }
-  printList(*ptrHead);
 }
 
 void MergeSort(Node** ptrHead) 
@@ -461,4 +589,28 @@ void MergeSort(Node** ptrHead)
     // Mescla as duas partes ordenadas
     *ptrHead = mergeSortedList(ptrFront, ptrBack);
     if (*ptrHead != nullptr) (*ptrHead)->ptrLeft = nullptr;
+}
+
+Node* shellSort(Node* ptrHead, int iSize)
+{
+    if (ptrHead == nullptr) return nullptr;
+  
+    Node* ptrTemp = nullptr;
+    
+    int iGap = iSize / 2;
+    while (iGap > 1)
+    {
+        for (int iFase = 0; iFase < iGap; iFase++)
+        {
+            ptrTemp = extractList(ptrHead, iGap, iFase);
+            InsertionSort(&ptrTemp);
+            ptrHead = mergeLists(ptrHead, ptrTemp, iGap, iFase);
+        }
+        
+        iGap /= 2;
+    }
+    
+    InsertionSort(&ptrHead);
+    
+    return ptrHead;
 }
