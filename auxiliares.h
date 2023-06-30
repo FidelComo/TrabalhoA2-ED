@@ -265,6 +265,22 @@ void converte(Node* ptrRoot, Node** ptrHead)
   converte(ptrRoot->ptrRight, ptrHead);
 }
 
+bool isLevelFull(Node* ptrStartingNode, int iLevel)
+{
+    if (ptrStartingNode == nullptr) return 0;
+    
+    iLevel--;
+    
+    if (iLevel > 0)
+    {
+        if (!isLevelFull(ptrStartingNode->ptrLeft, iLevel)) return 0;
+        if (!isLevelFull(ptrStartingNode->ptrRight, iLevel)) return 0;
+    }
+    
+    return 1;
+}
+
+
 /*===================================================================*/
 //Funções para Lists
 

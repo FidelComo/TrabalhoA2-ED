@@ -113,24 +113,30 @@ Node* buscar(Node* ptrHead, double &dbTempo)
   return nullptr;
 }
 
-bool completa(Node* ptrHead, double &dbTempo)
+void completa(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  //Inserir operação
+  
+  int iAltura = height(ptrHead);
+  bool bCompleta = isLevelFull(ptrHead, iAltura - 1);
+  
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-
-  return 0;
+  
+  cout << "A sua árvore " << ((!bCompleta) ? "não " : "") << "é completa" << endl;
 }
 
-bool perfeita(Node* ptrHead, double &dbTempo)
+void perfeita(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  //Inserir operação
+  
+  int iAltura = height(ptrHead);
+  bool bPerfeita = isLevelFull(ptrHead, iAltura);
+  
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-
-  return 0;
+  
+  cout << "A sua árvore " << ((!bPerfeita) ? "não " : "") << "é perfeita" << endl;
 }
 
 void exebe_BFS(Node* ptrHead, double &dbTempo)
@@ -158,7 +164,7 @@ Node* sort_Bubble(Node* ptrHead, double dbTempo)
 }
 
 Node* sort_Insertion(Node* ptrHead, double dbTempo)
-{
+{ 
   auto start = chrono::high_resolution_clock::now();
   
   //Operação
