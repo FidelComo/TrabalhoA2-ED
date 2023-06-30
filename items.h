@@ -10,7 +10,7 @@ Node* constroi_txt(Node* ptrRoot, double &dbTempo)
   
   cout << "Digite o nome do arquivo: (0 Para sair)" << endl;
 
-  // Pedir para o usuario o nome do arquivo até ele fornecer um nome valido
+  // Pedir para o usuário o nome do arquivo até ele fornecer um nome válido
   while (!file.is_open())
   {
     cin >> strFileName;
@@ -18,7 +18,7 @@ Node* constroi_txt(Node* ptrRoot, double &dbTempo)
     file.open(strFileName);
   }
 
-  // Se ja existe uma árvore, ela será deletada
+  // Se já existir uma árvore, ela será deletada
   if (ptrRoot != nullptr) ptrRoot = deleteTree(ptrRoot);
     
   auto start = chrono::high_resolution_clock::now();
@@ -33,14 +33,17 @@ Node* constroi_txt(Node* ptrRoot, double &dbTempo)
   return ptrRoot;
 }
 
-Node* constroi_input(double &dbTempo)
+Node* constroi_input(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  //Inserir operação
+  
+  if (ptrHead != nullptr) ptrHead = deleteTree(ptrHead);
+  ptrHead = buildTreeImput(ptrHead);
+  
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
-  return nullptr;
+  return ptrHead;
 }
 
 void altura(Node* ptrHead, double &dbTempo)
@@ -139,7 +142,7 @@ void perfeita(Node* ptrHead, double &dbTempo)
   cout << "A sua árvore " << ((!bPerfeita) ? "não " : "") << "é perfeita" << endl;
 }
 
-void exebe_BFS(Node* ptrHead, double &dbTempo)
+void exibe_BFS(Node* ptrHead, double &dbTempo)
 {
   cout << "A sua árvore: " << endl;
   

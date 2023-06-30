@@ -46,7 +46,6 @@ void aguardarInput()
 int main()
 {
   Node* ptrHead = nullptr;
-  Node* ptrHead_list = nullptr;
   int iOption = 0;
   bool bValida = 1;
   double dbTempo = 0;
@@ -65,7 +64,7 @@ int main()
           ptrHead = constroi_txt(ptrHead, dbTempo);
           break;
         case 2:
-          ptrHead = constroi_input(dbTempo);
+          ptrHead = constroi_input(ptrHead, dbTempo);
           break;
         case 3:
           altura(ptrHead, dbTempo);
@@ -89,7 +88,7 @@ int main()
           perfeita(ptrHead, dbTempo);
           break;
         case 10:
-          exebe_BFS(ptrHead, dbTempo);
+          exibe_BFS(ptrHead, dbTempo);
           break;
         case 11:
           ptrHead = sort_Bubble(ptrHead, dbTempo);

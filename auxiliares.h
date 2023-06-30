@@ -1,4 +1,7 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 using namespace std;
 
 struct Node
@@ -183,7 +186,7 @@ struct Node* searchNode(struct Node* ptrNode, int iData)
 
 int height(struct Node* ptrStartingNode)
 {
-  if (ptrStartingNode == nullptr) return 0;
+  if (ptrStartingNode == nullptr) return -1;
 
   int iLeft = height(ptrStartingNode->ptrLeft);
   int iRight = height(ptrStartingNode->ptrRight);
@@ -244,14 +247,14 @@ void traverseBFS(Node* ptrRoot)
   }
 }
 
-void converte(Node* ptrRoot, Node** ptrHead)
+void convertTree(Node* ptrRoot, Node** ptrHead)
 {
   if (ptrRoot == nullptr) return;
   // Nó visitado anteriormente
   static Node* ptrPrev = nullptr;
  
   //Converte a sub árvore a esquerda
-  converte(ptrRoot->ptrLeft, ptrHead);
+  convertTree(ptrRoot->ptrLeft, ptrHead);
  
   if (ptrPrev == nullptr) *ptrHead = ptrRoot;
   else
@@ -262,7 +265,7 @@ void converte(Node* ptrRoot, Node** ptrHead)
   ptrPrev = ptrRoot;
  
   //Converte a sub árvore a direita
-  converte(ptrRoot->ptrRight, ptrHead);
+  convertTree(ptrRoot->ptrRight, ptrHead);
 }
 
 bool isLevelFull(Node* ptrStartingNode, int iLevel)
@@ -280,7 +283,24 @@ bool isLevelFull(Node* ptrStartingNode, int iLevel)
     return 1;
 }
 
-
+Node* buildTreeImput(Node* ptrRoot)
+{
+    int iData;
+    char cNums[512];
+    
+    cout<<"Me dê os valores para montar a árvore (separados por espaço): ";
+    scanf(" %[^\n]", cNums); //lê todos os números como um texto
+    
+    char* ptrToken = strtok(cNums," "); //lê até o primeiro espaço
+    
+    while(ptrToken != NULL)
+    {
+        iData = atoi(ptrToken);
+        ptrRoot = insertNode(ptrRoot, iData);
+        ptrToken = strtok (NULL, " ");
+    }
+    return ptrRoot;
+}
 /*===================================================================*/
 //Funções para Lists
 
