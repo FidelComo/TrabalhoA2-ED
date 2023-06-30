@@ -7,7 +7,7 @@ Node* constroi_txt(Node* ptrRoot, double &dbTempo)
   ifstream file;
   string strFileName = "";
   int iElement = 0;
-  
+
   cout << "Digite o nome do arquivo: (0 Para sair)" << endl;
 
   // Pedir para o usuário o nome do arquivo até ele fornecer um nome válido
@@ -20,26 +20,26 @@ Node* constroi_txt(Node* ptrRoot, double &dbTempo)
 
   // Se já existir uma árvore, ela será deletada
   if (ptrRoot != nullptr) ptrRoot = deleteTree(ptrRoot);
-    
+
   auto start = chrono::high_resolution_clock::now();
-  
+
   while (file >> iElement) ptrRoot = insertNode(ptrRoot, iElement);
-  
+
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
+
   file.close();
-  
+
   return ptrRoot;
 }
 
 Node* constroi_input(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  
+
   if (ptrHead != nullptr) ptrHead = deleteTree(ptrHead);
   ptrHead = buildTreeImput(ptrHead);
-  
+
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
@@ -61,9 +61,9 @@ void altura(Node* ptrHead, double &dbTempo)
 void tamanho(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  
+
   int iSize = calculateTreeSize(ptrHead);
-  
+
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
@@ -78,9 +78,9 @@ Node* inserir(Node* ptrHead, double &dbTempo)
   std::cin >> iInputValue;
 
   auto start = chrono::high_resolution_clock::now();
-  
+
   ptrHead = insertNode(ptrHead, iInputValue);
-  
+
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
@@ -96,9 +96,9 @@ Node* remover(Node* ptrHead, double &dbTempo)
   std::cin >> iInputValue;
 
   auto start = chrono::high_resolution_clock::now();
-  
+
   ptrHead = deleteNode(ptrHead, iInputValue);
-  
+
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
@@ -109,7 +109,17 @@ Node* remover(Node* ptrHead, double &dbTempo)
 Node* buscar(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  //Inserir operação
+    int element;
+    std::cout << "Digite o elemento a ser buscado na árvore: ";
+    std::cin >> element;
+
+    Node* result = buscarNode(ptrHead, element);
+
+    if (result != nullptr) {
+        std::cout << "Elemento encontrado na árvore." << std::endl;
+    } else {
+        std::cout << "Elemento não encontrado na árvore." << std::endl;
+    }
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 
@@ -119,37 +129,37 @@ Node* buscar(Node* ptrHead, double &dbTempo)
 void completa(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  
+
   int iAltura = height(ptrHead);
   bool bCompleta = isLevelFull(ptrHead, iAltura - 1);
-  
+
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
+
   cout << "A sua árvore " << ((!bCompleta) ? "não " : "") << "é completa" << endl;
 }
 
 void perfeita(Node* ptrHead, double &dbTempo)
 {
   auto start = chrono::high_resolution_clock::now();
-  
+
   int iAltura = height(ptrHead);
   bool bPerfeita = isLevelFull(ptrHead, iAltura);
-  
+
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
-  
+
   cout << "A sua árvore " << ((!bPerfeita) ? "não " : "") << "é perfeita" << endl;
 }
 
 void exibe_BFS(Node* ptrHead, double &dbTempo)
 {
   cout << "A sua árvore: " << endl;
-  
+
   auto start = chrono::high_resolution_clock::now();
-  
+
   traverseBFS(ptrHead);
-  
+
   auto end = chrono::high_resolution_clock::now();
   dbTempo = chrono::duration_cast < chrono::nanoseconds > (end - start).count();
 }
